@@ -2,17 +2,22 @@ import { BoxProfile } from "./style";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// import api from "../../assets/Services/api";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../assets/Services/api";
+import { useHistory } from "react-router";
 
 function EditPerfil({ Member, setMember, nextPage }) {
   const [token] = useState(JSON.parse(localStorage.getItem("@knz:token")));
   const GetUser = () => {
-    axios
-      .get(`https://kenziehub.herokuapp.com/users/${Member.id}`)
+    api
+      .get(`/users/${Member.id}`)
       .then((res) => setMember(res.data))
       .catch((err) => console.log(err));
+  };
+  const history = useHistory();
+  const Logout = () => {
+    localStorage.clear();
+    history.push("/");
   };
 
   useEffect(() => {
@@ -27,16 +32,12 @@ function EditPerfil({ Member, setMember, nextPage }) {
   const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
 
   const AddTech = (data) => {
-    axios
-      .post("https://kenziehub.herokuapp.com/users/techs", data, {
+    api
+      .post("/users/techs", data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((_) => GetUser())
       .catch((err) => console.log(err));
-  };
-  const Logout = () => {
-    nextPage("/");
-    window.localStorage.Clear();
   };
   return (
     <>

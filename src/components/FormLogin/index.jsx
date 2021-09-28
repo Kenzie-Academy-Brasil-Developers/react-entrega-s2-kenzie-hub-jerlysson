@@ -15,6 +15,7 @@ function FormLogin({ on, setOn, nextPage }) {
   });
 
   const LoginUser = (data) => {
+    localStorage.clear();
     api
       .post("/sessions", data)
       .then((res) => {

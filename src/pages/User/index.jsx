@@ -8,8 +8,8 @@ import {
 } from "./style";
 import logo4 from "../../assets/img/KenzieHub.svg";
 import EditPerfil from "../../components/EditPerfil";
-import axios from "axios";
 import { useState } from "react";
+import api from "../../assets/Services/api";
 
 function User({ on, Member, setMember, nextPage }) {
   if (!on) {
@@ -19,8 +19,8 @@ function User({ on, Member, setMember, nextPage }) {
     JSON.parse(localStorage.getItem("@knz:token")) || ""
   );
   const handleDelete = (id) => {
-    axios
-      .delete(`https://kenziehub.herokuapp.com/users/techs/${id}`, {
+    api
+      .delete(`/users/techs/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => console.log(res))
@@ -40,9 +40,9 @@ function User({ on, Member, setMember, nextPage }) {
             <DescList>
               <h3>Meus Cursos:</h3>
 
-              {Member.techs.map((elm) => (
-                <div>
-                  <p key={elm.id}>
+              {Member.techs?.map((elm) => (
+                <div key={elm.id}>
+                  <p>
                     {elm.title}: {elm.status}
                   </p>
                   <button onClick={() => handleDelete(elm.id)}>delete</button>
@@ -54,7 +54,11 @@ function User({ on, Member, setMember, nextPage }) {
             <p>Edite info</p>
             <AvatarBox />
             <button>Editar as infors</button>
-            <EditPerfil Member={Member} setMember={setMember} />
+            <EditPerfil
+              Member={Member}
+              setMember={setMember}
+              nextPage={nextPage}
+            />
           </ProfileBox>
         </DivContainer>
       </Main>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Switch, useHistory } from "react-router";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -7,9 +7,11 @@ import User from "../pages/User";
 
 function Rotas() {
   const [on, setOn] = useState(false);
-  const [Member, setMember] = useState(
-    JSON.parse(localStorage.getItem("@knz:user")) || ""
-  );
+  const [Member, setMember] = useState([]);
+
+  useEffect(() => {
+    setMember(JSON.parse(localStorage.getItem("@knz:user")) || []);
+  }, [on]);
 
   const history = useHistory();
 
