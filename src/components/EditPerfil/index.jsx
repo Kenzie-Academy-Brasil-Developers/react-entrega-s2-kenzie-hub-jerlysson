@@ -17,11 +17,11 @@ function EditPerfil({ Member, setMember, nextPage }) {
   };
 
   const history = useHistory();
-  const Logout = () => {
+  function Logout() {
     localStorage.clear();
     nextPage("/");
     // history.push("/");
-  };
+  }
 
   useEffect(() => {
     GetUser();
@@ -56,7 +56,7 @@ function EditPerfil({ Member, setMember, nextPage }) {
             <option>Acançado</option>
           </select>
           <button type="submit">Salvar</button>
-          <button onClick={() => Logout}>Sair</button>
+          <button onClick={Logout}>Sair</button>
         </form>
       </BoxProfile>
     </>
