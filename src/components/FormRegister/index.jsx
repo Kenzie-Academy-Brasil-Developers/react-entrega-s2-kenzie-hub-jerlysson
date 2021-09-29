@@ -32,7 +32,7 @@ function FormRegister({ on, nextPage }) {
     const newUser = { name, email, contact, password, course_module, bio };
     api
       .post("/users", newUser)
-      .then((_) => {})
+      .then((_) => nextPage("/login"))
       .catch((err) => console.log(err));
   };
   return (

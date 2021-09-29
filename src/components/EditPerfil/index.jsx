@@ -8,16 +8,19 @@ import { useHistory } from "react-router";
 
 function EditPerfil({ Member, setMember, nextPage }) {
   const [token] = useState(JSON.parse(localStorage.getItem("@knz:token")));
+
   const GetUser = () => {
     api
       .get(`/users/${Member.id}`)
       .then((res) => setMember(res.data))
       .catch((err) => console.log(err));
   };
+
   const history = useHistory();
   const Logout = () => {
     localStorage.clear();
-    history.push("/");
+    nextPage("/");
+    // history.push("/");
   };
 
   useEffect(() => {
